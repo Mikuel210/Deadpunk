@@ -175,7 +175,7 @@ public class BuildingSystem : Singleton<BuildingSystem>
 
     private void UpdateBuildingVisual()
     {
-        if (_placingBuilding) return;
+        if (_buildingVisual == null) return;
         
         Vector3 mousePosition = InputManager.GetMousePosition();
         Vector2Int gridPosition = Grid.GetGridPosition(mousePosition);
