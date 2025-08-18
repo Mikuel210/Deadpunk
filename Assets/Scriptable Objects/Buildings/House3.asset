@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939731e7e75247b7a9abbcd9ed75ddf8, type: 3}
+  m_Name: House3
+  m_EditorClassIdentifier: 
+  cost:
+  - resource: {fileID: 11400000, guid: 64dbbdad29bb2b14bac6c6aed9e79f65, type: 2}
+    amount: 50
+  - resource: {fileID: 11400000, guid: 8e089b7bff40b2646b8db0e3ac87346f, type: 2}
+    amount: 25
+  dimensions: {x: 1, y: 2}
+  proximityResource: {fileID: 0}
+  prefab: {fileID: 6897678337475719970, guid: 4c0c39fc2e22e6242b1bf53856991c43, type: 3}
+  visual: {fileID: 490384344948215279, guid: 6216d474a8db3d240a956946b9112146, type: 3}
