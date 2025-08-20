@@ -28,6 +28,8 @@ public class Resource : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    
+    public ResourceSO GetResourceSO() => _resourceSO;
 }
 
 [Serializable]

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building House2
       objectReference: {fileID: 0}
+    - target: {fileID: 6319251709602064498, guid: 5484badfcc98eb844a0aeb79544fe6a1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8668086803090874212, guid: 5484badfcc98eb844a0aeb79544fe6a1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -52,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8695209554032887759, guid: 5484badfcc98eb844a0aeb79544fe6a1, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -59,6 +67,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5067520206462727521, guid: 5484badfcc98eb844a0aeb79544fe6a1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1195716245394385780}
+    - targetCorrespondingSourceObject: {fileID: 5067520206462727521, guid: 5484badfcc98eb844a0aeb79544fe6a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1108859593643620588}
   m_SourcePrefab: {fileID: 100100000, guid: 5484badfcc98eb844a0aeb79544fe6a1, type: 3}
 --- !u!1 &6897678337475719970 stripped
 GameObject:
@@ -78,3 +89,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   housing: 1
+--- !u!65 &1108859593643620588
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6897678337475719970}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.5, y: 9, z: 2.5}
+  m_Center: {x: 2.5, y: 4.5, z: 1.85}

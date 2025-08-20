@@ -116,4 +116,6 @@ public class GridObject<T>
         _grid.InvokeOnGridObjectChanged(_x, _z);
     }
     public void ClearValue() => SetValue(default);
+    
+    public T GetValue() => _value;
 }

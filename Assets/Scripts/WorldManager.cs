@@ -9,6 +9,7 @@ public class WorldManager : Singleton<WorldManager>
     
     [SerializeField] private ResourceSO wood;
     [SerializeField] private ResourceSO stone;
+    [SerializeField] private ResourceSO metal;
     
     private Texture2D _texture;
     private int _textureSize;
@@ -47,6 +48,7 @@ public class WorldManager : Singleton<WorldManager>
             {
                 // Generate resource from color
                 Color color = _texture.GetPixel(x, y);
+                Color oreColor = _texture.GetPixel(x + _textureSize / 2, y + _textureSize / 2);
                 GridObject<Resource> gridObject = Grid.GetGridObject(x, y);
                 
                 Vector2Int gridPosition = new Vector2Int(x, y);
@@ -56,7 +58,9 @@ public class WorldManager : Singleton<WorldManager>
                 
                 if (color.r < 0.15f)
                     resource = Resource.Create(worldPosition, wood, gridPosition);
-                else if (color.r > 0.85f)
+                else if (oreColor.r > 0.875f)
+                    resource = Resource.Create(worldPosition, metal, gridPosition);
+                else if (oreColor.r < 0.15f)
                     resource = Resource.Create(worldPosition, stone, gridPosition);
                 
                 gridObject.SetValue(resource);
@@ -66,7 +70,7 @@ public class WorldManager : Singleton<WorldManager>
                 // Fill proimity grid
                 foreach (Vector2Int relativePosition in _proximityPositions)
                 {
-                    Vector2Int absolutePosition = relativePosition + gridPosition;
+                    Vector2Int absolutePosition = relativePosition + gridPosition - Vector2Int.one; // if it works it works
                     ProximityGrid.GetGridObject(absolutePosition)?.SetValue(resource);
                 }
             }   

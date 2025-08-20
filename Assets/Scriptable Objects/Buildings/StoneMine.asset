@@ -17,7 +17,9 @@ MonoBehaviour:
     amount: 10
   - resource: {fileID: 11400000, guid: 8e089b7bff40b2646b8db0e3ac87346f, type: 2}
     amount: 5
-  dimensions: {x: 1, y: 1}
-  proximityResource: {fileID: 0}
-  prefab: {fileID: 6897678337475719970, guid: d16987c158c98414499e71c68c399193, type: 3}
-  visual: {fileID: 490384344948215279, guid: 6ca0e1795f7e6374689a74e9f879e63c, type: 3}
+  dimensions: {x: 2, y: 2}
+  proximityResource: {fileID: 11400000, guid: 8e089b7bff40b2646b8db0e3ac87346f, type: 2}
+  isTurret: 0
+  isWall: 0
+  prefab: {fileID: 7672345924082872827, guid: 8b6fdbb86cc81144f8c7c408dcfc6151, type: 3}
+  visual: {fileID: 659259613826362665, guid: dc0ee8a59d024594a997f14cd1710364, type: 3}

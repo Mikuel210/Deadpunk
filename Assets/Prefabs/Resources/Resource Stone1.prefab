@@ -50,19 +50,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3715145049045004472, guid: c2bc2c7a87b351b4d8ba7f52d09d2a79, type: 3}
       propertyPath: m_Name
-      value: Resource Stone
+      value: Resource Stone1
       objectReference: {fileID: 0}
     - target: {fileID: 6767989812018712000, guid: c2bc2c7a87b351b4d8ba7f52d09d2a79, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6767989812018712000, guid: c2bc2c7a87b351b4d8ba7f52d09d2a79, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6767989812018712000, guid: c2bc2c7a87b351b4d8ba7f52d09d2a79, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6767989812018712000, guid: c2bc2c7a87b351b4d8ba7f52d09d2a79, type: 3}
       propertyPath: m_ConstrainProportionsScale

@@ -26,11 +26,6 @@ public class Utilities : Singleton<Utilities>
         float time = startingTime;
         
         FunctionUpdater.Create(() => {
-            // Look at camera
-            Transform cameraPosition = Camera.main.transform;
-            canvas.transform.LookAt(cameraPosition.forward - cameraPosition.position);
-            canvas.transform.eulerAngles = new(canvas.transform.eulerAngles.x, 0, 0);
-            
             // Update position and color
             rectTransform.position += new Vector3(0, Time.unscaledDeltaTime / startingTime * 10f);
             textMesh.color = new(textMesh.color.r, textMesh.color.g, textMesh.color.b, textMesh.color.a - Time.unscaledDeltaTime / startingTime);

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939731e7e75247b7a9abbcd9ed75ddf8, type: 3}
+  m_Name: MetalMine
+  m_EditorClassIdentifier: 
+  cost:
+  - resource: {fileID: 11400000, guid: 64dbbdad29bb2b14bac6c6aed9e79f65, type: 2}
+    amount: 10
+  - resource: {fileID: 11400000, guid: 8e089b7bff40b2646b8db0e3ac87346f, type: 2}
+    amount: 5
+  dimensions: {x: 2, y: 2}
+  proximityResource: {fileID: 11400000, guid: 1ff61d472d99caf41b6353885b626c1c, type: 2}
+  isTurret: 0
+  isWall: 0
+  prefab: {fileID: 7864101871571874017, guid: 62123c43f24401644a2744dde04efb3c, type: 3}
+  visual: {fileID: 8272496000012610344, guid: 1779940ca5aed624f9b31f931934cfe6, type: 3}
