@@ -3,12 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace DayNightCycle {
 
 	public class TimeManager : Singleton<TimeManager> {
 
-		[SerializeField] private TimeSettings timeSettings;
+		[field: SerializeField] public TimeSettings TimeSettings { get; private set;  }
 		
 		[Header("Effects")]
 		[SerializeField] private TextMeshProUGUI timeText;
@@ -28,7 +29,7 @@ namespace DayNightCycle {
 		private ColorAdjustments _colorAdjustments;
 
 		void Awake() {
-			TimeService = new(timeSettings);
+			TimeService = new(TimeSettings);
 			volume.profile.TryGet(out _colorAdjustments);
 		}
 

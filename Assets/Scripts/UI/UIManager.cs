@@ -1,6 +1,7 @@
 using Helpers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -29,6 +30,10 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject demolishButtonIcon;
     [Space, SerializeField] private Sprite buttonSprite;
     [SerializeField] private Sprite closeIconSprite;
+    
+    [Header("Panels")]
+    [SerializeField] private GameObject losePanel;
+    [SerializeField] private GameObject winPanel;
 
     private bool _isShopOpen;
     public bool IsShopOpen
@@ -68,8 +73,34 @@ public class UIManager : Singleton<UIManager>
         GameManager.Instance.Metal.OnValueChanged += value => UpdateTextObject(metalText, value);
         GameManager.Instance.Happiness.OnValueChanged += value => UpdateSlider(happinessSlider, value, false);
         GameManager.Instance.Hunger.OnValueChanged += value => UpdateSlider(hungerSlider, value, true);
+
+        GameManager.Instance.OnGameEnded += message => {
+            if (GameManager.Instance.CurrentState == GameManager.State.Lost) {
+                losePanel.SetActive(true);
+                
+                var text = losePanel.transform.Find("MessageText").GetComponent<TextMeshProUGUI>();
+                text.text = message;
+            }
+            else {
+                winPanel.SetActive(true);
+                
+                var text = winPanel.transform.Find("MessageText").GetComponent<TextMeshProUGUI>();
+                text.text = message;
+            }
+        };
         
         UpdateShop();
+    }
+
+    public void Continue() {
+        SceneManager.LoadScene(0);
+    }
+
+    public void PlayAgain() {
+        if (GameManager.Instance.IsTutorial)
+            SceneManager.LoadScene(2);
+        else
+            SceneManager.LoadScene(1);
     }
 
     void Update() {

@@ -3,6 +3,7 @@ using Helpers;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 public class BuildingSystem : Singleton<BuildingSystem>
 {
@@ -13,7 +14,7 @@ public class BuildingSystem : Singleton<BuildingSystem>
     [Space, SerializeField] private Material visualBlueMaterial;
     [SerializeField] private Material visualRedMaterial;
     
-    private bool _placingBuilding;
+    public bool PlacingBuilding { get; private set; }
     private BuildingSO _currentBuildingSO;
     private BuildingSO.Direction _currentDirection = BuildingSO.Direction.Down;
     private GameObject _buildingVisual;
@@ -51,14 +52,14 @@ public class BuildingSystem : Singleton<BuildingSystem>
         StopBuilding();
         StopDemolishing();
         
-        _placingBuilding = true;
+        PlacingBuilding = true;
         _currentBuildingSO = building;
         _buildingVisual = Instantiate(building.visual);
     }
 
     public void StopBuilding()
     {
-        _placingBuilding = false;
+        PlacingBuilding = false;
         _currentBuildingSO = null;
         
         Destroy(_buildingVisual);
@@ -132,7 +133,7 @@ public class BuildingSystem : Singleton<BuildingSystem>
     
     private void UpdateBuildingRotation()
     {
-        if (!_placingBuilding) return;
+        if (!PlacingBuilding) return;
         
         if (Input.GetKeyDown(KeyCode.Q))
             _currentDirection = BuildingSO.GetPreviousDirection(_currentDirection);
@@ -246,7 +247,7 @@ public class BuildingSystem : Singleton<BuildingSystem>
     
     private void UpdateBuildingPlacement()
     {
-        if (!_placingBuilding) return;
+        if (!PlacingBuilding) return;
         if (!Input.GetMouseButton(0)) return;
 
         Vector3 mousePosition = InputManager.GetMousePosition();
@@ -303,6 +304,6 @@ public class BuildingSystem : Singleton<BuildingSystem>
         Material material = canPlace ? visualBlueMaterial : visualRedMaterial;
 
         foreach (MeshRenderer renderer in renderers) 
-            renderer.material = material;
+            renderer.SetMaterials(Enumerable.Repeat(material, renderer.materials.Length).ToList());
     }
 }

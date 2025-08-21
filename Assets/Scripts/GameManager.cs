@@ -11,6 +11,8 @@ using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
+    [field: SerializeField] public bool IsTutorial { get; private set; }
+    
     public Observer<int> People { get; private set; } = new();
     public Observer<int> Housing { get; private set; } = new();
     public Observer<int> Food { get; private set; } = new();
@@ -21,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     public Observer<float> Happiness { get; private set; } = new();
     public Observer<float> Hunger { get; private set; } = new();
 
-    [SerializeField] private BuildingSO startingBuilding;
+    [Space, SerializeField] private BuildingSO startingBuilding;
     
     [field: Space, SerializeField] public int NightsWithoutWaves { get; private set; }
     [field: SerializeField] public List<Wave> Waves { get; private set; }
@@ -49,8 +51,14 @@ public class GameManager : Singleton<GameManager>
     public State CurrentState { get; private set; }
     public enum State {
         Day,
-        Night
+        Night,
+        Won,
+        Lost
     }
+
+    private bool _spawning;
+
+    public event Action<string> OnGameEnded;
     
     
     public int CurrentCycle { get; private set; }
@@ -63,18 +71,18 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         Wood.Value = 100;
-        Stone.Value = 100;
+        Stone.Value = IsTutorial ? 150 : 100;
         People.Value = 10;
 
         Happiness.Value = 100;
         Hunger.Value = 0;
-
+        
         BuildingSystem.Instance.Build(
             BuildingSystem.Instance.Grid.GetGridPosition(new(-5, 0, 15)), 
             startingBuilding, 
             BuildingSO.Direction.Up
         );
-        
+
         TimeManager.Instance.TimeService.OnSunrise += OnSunrise;
         TimeManager.Instance.TimeService.OnSunset += OnSunset;
     }
@@ -82,6 +90,21 @@ public class GameManager : Singleton<GameManager>
     void Update() {
         UpdateFood();
         UpdateHappiness();
+
+        if (CurrentState == State.Won || CurrentState == State.Lost) return;
+
+        if (Happiness <= 0) {
+            CurrentState = State.Lost;
+            OnGameEnded?.Invoke("Your residents were unhappy\nand left the city");
+        }
+        else if (Hunger >= 100) {
+            CurrentState = State.Lost;
+            OnGameEnded?.Invoke("Your residents starved to death");
+        }
+        else if (!_spawning && CurrentWave >= Waves.Count && GameObject.FindGameObjectsWithTag("Enemy").Length == 0) {
+            CurrentState = State.Won;
+            OnGameEnded?.Invoke("You have defeated the last wave");
+        }
     }
 
     
@@ -94,15 +117,18 @@ public class GameManager : Singleton<GameManager>
         CurrentCycle++;
 
         if (CurrentCycle < NightsWithoutWaves) return;
-
+        if (CurrentWave - 1 >= Waves.Count) return;
+        
         CurrentWave++;
 
-        Wave currentWave = Waves[Mathf.Min(CurrentWave - 1, Waves.Count - 1)];
-        SpawnWave(currentWave);
+        Wave currentWave = Waves[CurrentWave - 1];
+        StartCoroutine(SpawnWave(currentWave));
     }
     
     
-    private void SpawnWave(Wave wave) {
+    private IEnumerator SpawnWave(Wave wave) {
+        _spawning = true;
+        
         (Vector3 center, Vector3 deviation) = GetWaveData();
         
         float baseDistance = 25f;
@@ -116,6 +142,10 @@ public class GameManager : Singleton<GameManager>
         
         foreach (Burst burst in wave.bursts)
             StartCoroutine(SpawnBurst(burst, center, deviation));
+
+        yield return new WaitForSeconds(wave.GetDuration());
+
+        _spawning = false;
     }
     
     private IEnumerator SpawnBurst(Burst burst, Vector3 center, Vector3 deviation)
