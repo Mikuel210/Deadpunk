@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939731e7e75247b7a9abbcd9ed75ddf8, type: 3}
+  m_Name: Turret4
+  m_EditorClassIdentifier: 
+  cost:
+  - resource: {fileID: 11400000, guid: 1ff61d472d99caf41b6353885b626c1c, type: 2}
+    amount: 200
+  dimensions: {x: 2, y: 2}
+  proximityResource: {fileID: 0}
+  isTurret: 1
+  isWall: 0
+  isSupport: 0
+  prefab: {fileID: 8043889744958830539, guid: def8435b885ac0b40aec9f65b435a722, type: 3}
+  visual: {fileID: 4374198108008738433, guid: 7a05e37ae3de8ab46b1766f0dcdafe66, type: 3}

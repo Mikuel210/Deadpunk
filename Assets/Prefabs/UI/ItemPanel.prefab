@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 8661655470392702309}
   - component: {fileID: 659293597094363460}
   m_Layer: 5
-  m_Name: IronText
+  m_Name: MetalText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -25,8 +25,8 @@ public class WorkerUI : MonoBehaviour
         UIManager.UpdateTextObject(textObject, text, true);
         
         // Update buttons
-        plusButton.color = _workerSystem.CanAddWorker() ? Color.white : Color.red;
-        minusButton.color = _workerSystem.CanRemoveWorker() ? Color.white : Color.red;
+        if (plusButton) plusButton.color = _workerSystem.CanAddWorker() ? Color.white : Color.red;
+        if (minusButton) minusButton.color = _workerSystem.CanRemoveWorker() ? Color.white : Color.red;
     }
 
     public void AddWorker() => _workerSystem.AddWorker();

@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone CornerWall
       objectReference: {fileID: 0}
+    - target: {fileID: 2780169451226118531, guid: cd8466cbb20edcb4498568e640cebb3c, type: 3}
+      propertyPath: <MaximumHealth>k__BackingField
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 4318258005650061792, guid: cd8466cbb20edcb4498568e640cebb3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StoneTurretSupport
   m_EditorClassIdentifier: 
   cost:
-  - resource: {fileID: 11400000, guid: 64dbbdad29bb2b14bac6c6aed9e79f65, type: 2}
-    amount: 10
+  - resource: {fileID: 11400000, guid: 8e089b7bff40b2646b8db0e3ac87346f, type: 2}
+    amount: 20
   dimensions: {x: 1, y: 1}
   proximityResource: {fileID: 0}
   isTurret: 0

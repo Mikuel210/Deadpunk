@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using DayNightCycle;
 using Helpers;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
@@ -19,6 +21,9 @@ public class GameManager : Singleton<GameManager>
     public Observer<float> Happiness { get; private set; } = new();
     public Observer<float> Hunger { get; private set; } = new();
 
+    [SerializeField] private BuildingSO startingBuilding;
+    
+    [field: Space, SerializeField] public int NightsWithoutWaves { get; private set; }
     [field: SerializeField] public List<Wave> Waves { get; private set; }
     
     [Serializable]
@@ -48,6 +53,7 @@ public class GameManager : Singleton<GameManager>
     }
     
     
+    public int CurrentCycle { get; private set; }
     public int CurrentWave { get; private set; }
     public int NextWave => CurrentState == State.Day ? CurrentWave + 1 : CurrentWave;
     
@@ -56,12 +62,18 @@ public class GameManager : Singleton<GameManager>
     
     void Start()
     {
-        Wood.Value = 1000;
-        Stone.Value = 1000;
+        Wood.Value = 100;
+        Stone.Value = 100;
         People.Value = 10;
 
         Happiness.Value = 100;
         Hunger.Value = 0;
+
+        BuildingSystem.Instance.Build(
+            BuildingSystem.Instance.Grid.GetGridPosition(new(-5, 0, 15)), 
+            startingBuilding, 
+            BuildingSO.Direction.Up
+        );
         
         TimeManager.Instance.TimeService.OnSunrise += OnSunrise;
         TimeManager.Instance.TimeService.OnSunset += OnSunset;
@@ -79,6 +91,10 @@ public class GameManager : Singleton<GameManager>
     
     private void OnSunset() {
         CurrentState = State.Night;
+        CurrentCycle++;
+
+        if (CurrentCycle < NightsWithoutWaves) return;
+
         CurrentWave++;
 
         Wave currentWave = Waves[Mathf.Min(CurrentWave - 1, Waves.Count - 1)];

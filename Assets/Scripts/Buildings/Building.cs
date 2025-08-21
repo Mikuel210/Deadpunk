@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,12 +24,27 @@ public class Building : MonoBehaviour
         return building;
     }
 
+    private void OnDestroy() => Demolish();
+
     public void Demolish()
     {
         List<Vector2Int> gridPositions = BuildingSO.GetGridPositions(Origin, Direction);
         
-        foreach (Vector2Int gridPosition in gridPositions)
-            BuildingSystem.Instance.Grid.GetGridObject(gridPosition).ClearValue();
+        foreach (Vector2Int gridPosition in gridPositions) {
+            Building turret = BuildingSystem.Instance.Grid.GetGridObject(gridPosition).GetValue2();
+
+            if (turret) {
+                List<Vector2Int> positions = turret.BuildingSO.GetGridPositions(turret.Origin, turret.Direction);
+
+                foreach (Vector2Int position in positions)
+                    BuildingSystem.Instance.Grid.GetGridObject(position).ClearValue2();
+                
+                Destroy(turret.gameObject);
+            }
+            
+            if (!BuildingSO.isTurret)
+                BuildingSystem.Instance.Grid.GetGridObject(gridPosition).ClearValue();
+        }
         
         Destroy(gameObject);
     }

@@ -16,10 +16,11 @@ MonoBehaviour:
   - resource: {fileID: 11400000, guid: 64dbbdad29bb2b14bac6c6aed9e79f65, type: 2}
     amount: 10
   - resource: {fileID: 11400000, guid: 8e089b7bff40b2646b8db0e3ac87346f, type: 2}
-    amount: 5
+    amount: 50
   dimensions: {x: 3, y: 2}
   proximityResource: {fileID: 11400000, guid: 64dbbdad29bb2b14bac6c6aed9e79f65, type: 2}
   isTurret: 0
   isWall: 0
+  isSupport: 0
   prefab: {fileID: 2002393580307788046, guid: bacddd7e2a6a675468c54d8bfd2b4bc9, type: 3}
   visual: {fileID: 2603188884741867131, guid: 4ccccf8d32c3c7448802edf760ac7925, type: 3}

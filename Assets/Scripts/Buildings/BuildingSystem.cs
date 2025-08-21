@@ -116,8 +116,8 @@ public class BuildingSystem : Singleton<BuildingSystem>
         // Delete
         if (!Input.GetMouseButtonDown(0)) return;
         
-        Building building = buildingUnderMouse.GetComponent<Building>();
-        building.Demolish();
+        Building building = buildingUnderMouse?.GetComponent<Building>();
+        building?.Demolish();
     }
 
     private void ChangeMeshColor(GameObject mesh, Color color) {
@@ -207,15 +207,40 @@ public class BuildingSystem : Singleton<BuildingSystem>
         
         return canAfford;
     }
-    
-    private bool CanBuild(Vector2Int gridPosition)
-    {
+
+    private bool CanBuildNormal(Vector2Int gridPosition) {
         bool canBuild = CanPlaceInGrid(Grid, gridPosition) && CanPlaceInGrid(WorldManager.Instance.Grid, gridPosition);
         bool isMouseOverUI = EventSystem.current.IsPointerOverGameObject();
         bool isInProximityRange = IsInProximityRange(gridPosition);
         bool canAfford = CanAfford();
             
         return canBuild && isInProximityRange && canAfford && !isMouseOverUI;
+    }
+
+    private bool CanBuildTurret(Vector2Int gridPosition) {
+        bool canBuild = true;
+
+        foreach (Vector2Int position in _currentBuildingSO.GetGridPositions(gridPosition, _currentDirection)) {
+            GridObject<Building> gridObject = Grid.GetGridObject(position);
+            BuildingSO buildingSO = gridObject.GetValue()?.BuildingSO;
+            
+            if (buildingSO && buildingSO.isSupport && !gridObject.GetValue2()) continue;
+
+            canBuild = false;
+            break;
+        }
+        
+        bool isMouseOverUI = EventSystem.current.IsPointerOverGameObject();
+        bool canAfford = CanAfford();
+            
+        return canBuild && canAfford && !isMouseOverUI;
+    }
+    
+    private bool CanBuild(Vector2Int gridPosition) {
+        if (!_currentBuildingSO.isTurret)
+            return CanBuildNormal(gridPosition);
+        
+        return CanBuildTurret(gridPosition);
     }
         
     
@@ -238,15 +263,23 @@ public class BuildingSystem : Singleton<BuildingSystem>
         GameManager.Instance.Wood.Value -= woodCost;
         GameManager.Instance.Stone.Value -= stoneCost;
         GameManager.Instance.Metal.Value -= metalCost;
-        
-        // Place building
-        Vector3 worldPosition = Grid.GetWorldPosition(gridPosition);
-        Building building = Building.Create(worldPosition, _currentBuildingSO, gridPosition, _currentDirection);
-        
-        List<Vector2Int> gridPositions = _currentBuildingSO.GetGridPositions(gridPosition, _currentDirection);
 
-        foreach (Vector2Int position in gridPositions)
-            Grid.GetGridObject(position).SetValue(building);
+        // Place building
+        Build(gridPosition, _currentBuildingSO, _currentDirection);
+    }
+
+    public void Build(Vector2Int gridPosition, BuildingSO buildingSO, BuildingSO.Direction direction) {
+        Vector3 worldPosition = Grid.GetWorldPosition(gridPosition);
+        Building building = Building.Create(worldPosition, buildingSO, gridPosition, direction);
+        
+        List<Vector2Int> gridPositions = buildingSO.GetGridPositions(gridPosition, direction);
+
+        foreach (Vector2Int position in gridPositions) {
+            if (buildingSO.isTurret)
+                Grid.GetGridObject(position).SetValue2(building);
+            else
+                Grid.GetGridObject(position).SetValue(building);
+        }
     }
 
     private void UpdateBuildingVisual()

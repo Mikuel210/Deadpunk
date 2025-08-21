@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Metal TurretSupport
   m_EditorClassIdentifier: 
   cost:
-  - resource: {fileID: 11400000, guid: 64dbbdad29bb2b14bac6c6aed9e79f65, type: 2}
-    amount: 10
+  - resource: {fileID: 11400000, guid: 1ff61d472d99caf41b6353885b626c1c, type: 2}
+    amount: 20
   dimensions: {x: 1, y: 1}
   proximityResource: {fileID: 0}
   isTurret: 0

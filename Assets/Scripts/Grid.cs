@@ -100,6 +100,7 @@ public class GridObject<T>
     private int _z;
     
     private T _value;
+    private T _value2;
 
     public GridObject(Grid<T> grid, int x, int z)
     {
@@ -116,6 +117,13 @@ public class GridObject<T>
         _grid.InvokeOnGridObjectChanged(_x, _z);
     }
     public void ClearValue() => SetValue(default);
-    
     public T GetValue() => _value;
+
+    public void SetValue2(T value) {
+        _value2 = value;
+        _grid.InvokeOnGridObjectChanged(_x, _z);
+    }
+    public void ClearValue2() => SetValue2(default);
+    public T GetValue2() => _value2;
+
 }

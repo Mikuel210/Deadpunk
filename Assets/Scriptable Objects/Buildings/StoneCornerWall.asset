@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: StoneCornerWall
   m_EditorClassIdentifier: 
   cost:
-  - resource: {fileID: 11400000, guid: 64dbbdad29bb2b14bac6c6aed9e79f65, type: 2}
+  - resource: {fileID: 11400000, guid: 8e089b7bff40b2646b8db0e3ac87346f, type: 2}
     amount: 10
   dimensions: {x: 1, y: 1}
   proximityResource: {fileID: 0}
   isTurret: 0
   isWall: 1
+  isSupport: 0
   prefab: {fileID: 5683874039967253370, guid: 04b88d28942c02a43882d207830feea3, type: 3}
   visual: {fileID: 2413521363837325153, guid: 293c5dc18a6d47049b751504d5b7179d, type: 3}

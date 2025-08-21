@@ -72,7 +72,12 @@ public class UIManager : Singleton<UIManager>
         UpdateShop();
     }
 
-    void Update() => UpdateTextObject(waveText, "Wave " + GameManager.Instance.NextWave);
+    void Update() {
+        if (GameManager.Instance.CurrentCycle >= GameManager.Instance.NightsWithoutWaves)
+            UpdateTextObject(waveText, "Wave " + GameManager.Instance.NextWave);
+        else
+            UpdateTextObject(waveText, "T-" + (GameManager.Instance.NightsWithoutWaves - GameManager.Instance.CurrentCycle) + " Days");
+    }
 
     public static void UpdateTextObject(TextMeshProUGUI textObject, object value, bool updateDimensions = false) {
         if (textObject == null) return;

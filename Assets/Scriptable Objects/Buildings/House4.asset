@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost:
   - resource: {fileID: 11400000, guid: 64dbbdad29bb2b14bac6c6aed9e79f65, type: 2}
-    amount: 80
+    amount: 50
   - resource: {fileID: 11400000, guid: 8e089b7bff40b2646b8db0e3ac87346f, type: 2}
-    amount: 40
+    amount: 100
   dimensions: {x: 2, y: 1}
   proximityResource: {fileID: 0}
+  isTurret: 0
+  isWall: 0
+  isSupport: 0
   prefab: {fileID: 6897678337475719970, guid: d54a569689280a04a80460b4bec835e5, type: 3}
   visual: {fileID: 490384344948215279, guid: 417d0e09f0eaf774890f82e1adf2f644, type: 3}

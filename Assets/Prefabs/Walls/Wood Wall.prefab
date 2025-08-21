@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wood Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 2890921985695727872, guid: 0912bcd18c919e34f9a13ecfdd10ec00, type: 3}
+      propertyPath: <MaximumHealth>k__BackingField
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 4784273273828538149, guid: 0912bcd18c919e34f9a13ecfdd10ec00, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

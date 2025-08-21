@@ -60,16 +60,18 @@ public class EnemyController : MonoBehaviour {
         _health.TakeDamage(damage * Time.deltaTime);
     }
 
-    private GameObject GetNearestBuildingMesh() {
-        List<GameObject> buildings = GameObject.FindGameObjectsWithTag("Building")
-            //.Where(e => !e.GetComponent<Building>().BuildingSO.isWall) todo: UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            .ToList();
+    private GameObject GetNearestBuildingMesh(bool excludeWalls = true) {
+        List<GameObject> buildings = GameObject.FindGameObjectsWithTag("Building").ToList();
+
+        if (excludeWalls) buildings = buildings.Where(e => !e.GetComponent<Building>().BuildingSO.isWall).ToList();
         
         List<GameObject> meshes = buildings.Select(e => e.transform.Find("Mesh").gameObject).ToList();
 
         GameObject nearestBuildingMesh = meshes
             .OrderBy(e => (transform.position - e.transform.position).sqrMagnitude)
             .FirstOrDefault();
+
+        if (!nearestBuildingMesh && excludeWalls) return GetNearestBuildingMesh(false);
 
         return nearestBuildingMesh;
     }
