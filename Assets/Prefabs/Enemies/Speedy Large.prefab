@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4022514610128886205, guid: 03f3682db424b33459653520a012dd94, type: 3}
       propertyPath: movementSpeed
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -4022514610128886205, guid: 03f3682db424b33459653520a012dd94, type: 3}
       propertyPath: damageToBuildings

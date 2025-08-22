@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Helpers;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace DayNightCycle {
 		
 		[Header("Effects")]
 		[SerializeField] private TextMeshProUGUI timeText;
+
+		[Space, SerializeField] private List<AudioClip> daySongs;
+		[SerializeField] private AudioClip nightSong;
 		
 		[Space, SerializeField] private Light sun;
 		[SerializeField] private Light moon;
@@ -27,16 +31,49 @@ namespace DayNightCycle {
 
 		public TimeService TimeService { get; private set; }
 		private ColorAdjustments _colorAdjustments;
+		private AudioSource _audioSource;
 
 		void Awake() {
 			TimeService = new(TimeSettings);
 			volume.profile.TryGet(out _colorAdjustments);
+			_audioSource = GetComponent<AudioSource>();
+		}
+
+		void PlayDaySong() {
+			
 		}
 
 		void Update() {
 			UpdateTimeOfDay();
 			UpdateLightRotation();
 			UpdateLightSettings();
+			UpdateMusic();
+		}
+		
+		private void UpdateMusic() {
+			UpdateAudioVolume();
+
+			if (TimeService.IsDayTime() || GameManager.Instance.CurrentCycle < GameManager.Instance.NightsWithoutWaves) {
+				if (!_audioSource.isPlaying || _audioSource.clip == nightSong) {
+					_audioSource.clip = daySongs[Random.Range(0, daySongs.Count)];
+					_audioSource.Play();	
+				}	
+			}
+			else {
+				if (!_audioSource.isPlaying || _audioSource.clip != nightSong) {
+					_audioSource.clip = nightSong;
+					_audioSource.Play();
+				}
+			}
+		}
+
+		private void UpdateAudioVolume() {
+			_audioSource.volume = 1;
+
+			if (GameManager.Instance.CurrentCycle + 1 < GameManager.Instance.NightsWithoutWaves) return;
+			if (GameManager.Instance.CurrentCycle + 1 == GameManager.Instance.NightsWithoutWaves && TimeService.CurrentTime.Hour < 18) return;
+			
+			_audioSource.volume = TimeService.IsDayTime() ? sun.intensity / maximumSunIntensity : moon.intensity / maximumMoonIntensity;
 		}
 
 		private void UpdateTimeOfDay() {

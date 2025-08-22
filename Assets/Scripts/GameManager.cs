@@ -68,8 +68,9 @@ public class GameManager : Singleton<GameManager>
     
     void Awake() => People.OnValueChanged += _ => UpdateFoodInterval();
     
-    void Start()
-    {
+    void Start() {
+        if (IsTutorial) TimeManager.Instance.TimeSettings.timeMultiplier = 0;
+        
         Wood.Value = 100;
         Stone.Value = IsTutorial ? 150 : 100;
         People.Value = 10;

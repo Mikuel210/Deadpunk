@@ -1,3 +1,4 @@
+using DayNightCycle;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -8,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 initialPosition;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float zoomSpeedMultiplier;
+    [SerializeField] private float movementSmoothing;
     
     [Header("Zoom")]
     [Space, SerializeField] private float startingZoom = 10;
@@ -22,6 +24,7 @@ public class CameraController : MonoBehaviour
     private float _smoothedZoom;
     
     private Vector3 _movementPosition;
+    private Vector3 _smoothedMovementPosition;
     private Vector3 _zoomPosition;
     
     private Camera _camera;
@@ -60,7 +63,8 @@ public class CameraController : MonoBehaviour
     {
         Vector3 movementVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
         _movementPosition += movementSpeed * Time.deltaTime * (1 + _zoom * zoomSpeedMultiplier) * movementVector;
+        _smoothedMovementPosition = Vector3.Lerp(_smoothedMovementPosition, _movementPosition, movementSmoothing * Time.deltaTime);
     }
     
-    private void UpdatePosition() => transform.position = initialPosition + _movementPosition + _zoomPosition;
+    private void UpdatePosition() => transform.position = initialPosition + _smoothedMovementPosition + _zoomPosition;
 }

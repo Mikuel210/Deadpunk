@@ -34,6 +34,7 @@ public class UIManager : Singleton<UIManager>
     [Header("Panels")]
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject pauseMenu;
 
     private bool _isShopOpen;
     public bool IsShopOpen
@@ -91,12 +92,31 @@ public class UIManager : Singleton<UIManager>
         
         UpdateShop();
     }
+    
+    public bool IsPaused { get; private set; }
+
+    public void TogglePause() {
+        IsPaused = !IsPaused;
+        Time.timeScale = IsPaused ? 0 : 1;
+        
+        pauseMenu.SetActive(IsPaused);   
+    }
+
+    public void ExitPause() {
+        IsPaused = false;
+        Time.timeScale = 1;
+        
+        pauseMenu.SetActive(false);   
+    }
 
     public void Continue() {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 
     public void PlayAgain() {
+        Time.timeScale = 1;
+        
         if (GameManager.Instance.IsTutorial)
             SceneManager.LoadScene(2);
         else

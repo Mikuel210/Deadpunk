@@ -118,7 +118,35 @@ public class BuildingSystem : Singleton<BuildingSystem>
         if (!Input.GetMouseButtonDown(0)) return;
         
         Building building = buildingUnderMouse?.GetComponent<Building>();
-        building?.Demolish();
+
+        if (!building) return;
+        
+        List<ResourceAmountPair> cost = building.BuildingSO.cost;
+        int woodCost = cost.FirstOrDefault(e => e.resource.name == "Wood")?.amount ?? 0;
+        int stoneCost = cost.FirstOrDefault(e => e.resource.name == "Stone")?.amount ?? 0;
+        int metalCost = cost.FirstOrDefault(e => e.resource.name == "Metal")?.amount ?? 0;
+
+        float multiplier = 0.5f;
+        GameManager.Instance.Wood.Value += Mathf.RoundToInt(woodCost * multiplier);
+        GameManager.Instance.Stone.Value += Mathf.RoundToInt(stoneCost * multiplier);
+        GameManager.Instance.Metal.Value += Mathf.RoundToInt(metalCost * multiplier);
+        
+        foreach (Vector2Int gridPosition in building.BuildingSO.GetGridPositions(building.Origin, building.Direction)) {
+            Building turret = Grid.GetGridObject(gridPosition).GetValue2();
+
+            if (turret) {
+                List<ResourceAmountPair> turretCost = turret.BuildingSO.cost;
+                int turretWoodCost = turretCost.FirstOrDefault(e => e.resource.name == "Wood")?.amount ?? 0;
+                int turretStoneCost = turretCost.FirstOrDefault(e => e.resource.name == "Stone")?.amount ?? 0;
+                int turretMetalCost = turretCost.FirstOrDefault(e => e.resource.name == "Metal")?.amount ?? 0;
+                
+                GameManager.Instance.Wood.Value += Mathf.RoundToInt(turretWoodCost * multiplier);
+                GameManager.Instance.Stone.Value += Mathf.RoundToInt(turretStoneCost * multiplier);
+                GameManager.Instance.Metal.Value += Mathf.RoundToInt(turretMetalCost * multiplier);
+            }
+        }
+        
+        building.Demolish();
     }
 
     private void ChangeMeshColor(GameObject mesh, Color color) {
